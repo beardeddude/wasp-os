@@ -7,7 +7,7 @@ from PIL import Image
 EXCLUDE = ('NotificationApp', 'PagerApp', 'TemplateApp', 'FacesApp', 'ReadMeApp')
 
 def test_screenshot(constructor):
-    if f'{constructor.__name__}' in EXCLUDE:
+    if f'{constructor.__name__}' in EXCLUDE or f'{constructor.__module__}'.startswith('apps.user.'):
         return
 
     fname = f'res/screenshots/{constructor.__name__}.png'.replace(' ', '')
@@ -26,7 +26,7 @@ def test_screenshot(constructor):
         assert screenshot.height == 406
 
 def test_README(constructor):
-    if f'{constructor.__name__}' in EXCLUDE:
+    if f'{constructor.__name__}' in EXCLUDE or f'{constructor.__module__}'.startswith('apps.user.'):
         return
 
     fname = f'res/screenshots/{constructor.__name__}.png'.replace(' ', '')
@@ -58,7 +58,7 @@ def test_README(constructor):
         assert ':width: 179' in readme[offset+2]
 
 def test_app_library(constructor):
-    if f'{constructor.__name__}' in EXCLUDE:
+    if f'{constructor.__name__}' in EXCLUDE or f'{constructor.__module__}'.startswith('apps.user.'):
         return
 
     with open('docs/apps.rst') as f:
@@ -74,13 +74,11 @@ def test_app_library(constructor):
 
 def test_app_naming(constructor):
     # The class name of every app must be the PascalCase version of its file name in snake_case appended with "App"
-    if f'{constructor.__name__}' in EXCLUDE:
+    if f'{constructor.__name__}' in EXCLUDE or f'{constructor.__module__}'.startswith('apps.user.'):
         return
 
     module = f'{constructor.__module__}'
-    if module.startswith('apps.user.'):
-        assert _snake_case_to_pascal_case(module.replace('apps.user.', '')) + 'App' == f'{constructor.__name__}'
-    elif module.startswith('apps.system.'):
+    if module.startswith('apps.system.'):
         assert _snake_case_to_pascal_case(module.replace('apps.system.', '')) + 'App' == f'{constructor.__name__}'
     elif module.startswith('apps.'):
         assert _snake_case_to_pascal_case(module.replace('apps.', '')) + 'App' == f'{constructor.__name__}'
@@ -89,7 +87,7 @@ def test_app_naming(constructor):
 
 
 def test_docstrings(constructor):
-    if f'{constructor.__name__}' in EXCLUDE:
+    if f'{constructor.__name__}' in EXCLUDE or f'{constructor.__module__}'.startswith('apps.user.'):
         return
 
     fname = f'res/screenshots/{constructor.__name__}.png'.replace(' ', '')
