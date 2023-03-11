@@ -2,7 +2,7 @@ name: wasp-os binary distribution
 
 on:
   push:
-    branches: [ master ]
+    branches: [ a_la_carte_ci_test ]
   pull_request:
     branches: [ master ]
 
