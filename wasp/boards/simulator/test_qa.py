@@ -78,7 +78,9 @@ def test_app_naming(constructor):
         return
 
     module = f'{constructor.__module__}'
-    if module.startswith('apps.system.'):
+    if module.startswith('apps.user.'):
+        assert _snake_case_to_pascal_case(module.replace('apps.user.', '')) + 'App' == f'{constructor.__name__}'
+    elif module.startswith('apps.system.'):
         assert _snake_case_to_pascal_case(module.replace('apps.system.', '')) + 'App' == f'{constructor.__name__}'
     elif module.startswith('apps.'):
         assert _snake_case_to_pascal_case(module.replace('apps.', '')) + 'App' == f'{constructor.__name__}'
